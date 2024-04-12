@@ -21,18 +21,27 @@ try {
         <img src=${data.image.small} />
         <span>${data.name}</span>
     `
-    document.getElementById("crypto").innerHTML += `
+    const para = document.getElementById("crypto").querySelectorAll("p")
+    if(para.length === 0){ 
+        document.getElementById("crypto").innerHTML += `
         <p>🎯: R${data.market_data.current_price.zar}</p>
         <p>👆: R${data.market_data.high_24h.zar}</p>
         <p>👇: R${data.market_data.low_24h.zar}</p>
-    `
+        `
+    } else {
+        para[0].textContent = `🎯: R${data.market_data.current_price.zar}`;
+        para[1].textContent = `👆: R${data.market_data.high_24h.zar}`;
+        para[2].textContent = `R${data.market_data.low_24h.zar}`;
+    }
+
+   
 } catch (err) {
     console.error(err)
 }
 
 function getCurrentTime() {
     const date = new Date()
-    document.getElementById("time").textContent = date.toLocaleTimeString("en-us", { timeStyle: "short" })
+    document.getElementById("time").textContent = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
 setInterval(getCurrentTime, 1000)
